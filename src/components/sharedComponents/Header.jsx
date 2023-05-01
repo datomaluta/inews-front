@@ -5,7 +5,9 @@ import PlusIcon from "./PlusIcon";
 const Header = () => {
   return (
     <header className="flex items-center justify-between">
-      <div className="text-blue-500 font-bold text-5xl">inews</div>
+      <div className="text-blue-500 font-bold text-5xl">
+        <Link to="/">inews</Link>
+      </div>
       <button className="hidden sm:block">
         <Burger />
       </button>
