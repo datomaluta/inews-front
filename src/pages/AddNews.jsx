@@ -1,22 +1,48 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import uploadImg from "../assets/images/uploadimg.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm, useWatch } from "react-hook-form";
 import { convertBase64 } from "../helpers/ConvertToBaseImage";
+import { createNews, updateNews } from "../services/newsService";
+import useGetData from "../hooks/useGetData";
 
-const AddNews = () => {
+const AddNews = (props) => {
   const formData = new FormData();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [baseImage, setBaseImage] = useState();
+  const [backendErrors, setBackendErrors] = useState();
+
+  const {
+    data: news,
+    fetchData: fetchCertainNews,
+    error: newsError,
+  } = useGetData(`news/${id}`);
+
+  useEffect(() => {
+    if (props.action === "update") {
+      fetchCertainNews();
+    }
+  }, []);
+
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm();
   const image = useWatch({ control, name: "thumbnail" });
-  const [baseImage, setBaseImage] = useState();
-  const [backendErrors, setBackendErrors] = useState();
+
+  useEffect(() => {
+    if (news) {
+      // setValue("title", news.title);
+      reset({ title: news.title, body: news.body });
+    }
+  }, [news]);
 
   useEffect(() => {
     const baseImageSetter = async () => {
@@ -31,28 +57,36 @@ const AddNews = () => {
   const submitHandler = async (data) => {
     formData.append("title", data.title);
     formData.append("body", data.body);
-    formData.append("thumbnail", data.thumbnail[0]);
-    let response = await axios({
-      method: "post",
-      url: "http://127.0.0.1:8000/api/create",
-      data: formData,
-      headers: { "Content-Type": "multipart/form-data" },
-    }).catch((error) => {
-      setBackendErrors(error.response.data.errors);
-    });
+    {
+      data.thumbnail.length !== 0 &&
+        formData.append("thumbnail", data.thumbnail[0]);
+    }
+    {
+      props.action === "update" && formData.append("_method", "put");
+    }
+    let response;
+    if (props.action === "create") {
+      response = await createNews(formData).catch((error) =>
+        setBackendErrors(error.response.data.errors)
+      );
+    } else {
+      response = await updateNews(id, formData).catch((error) => {
+        setBackendErrors(error.response.data.errors);
+      });
+    }
 
     if (response?.statusText === "OK") {
-      navigate("/");
+      navigate("/admin/news");
     }
   };
-
-  console.log(backendErrors);
 
   return (
     <div className="pb-20">
       <div className="flex justify-between items-center text-2xl md:text-xl">
         <h1>სიახლის დამატება</h1>
-        <Link className="bg-blue-500 px-2 py-1 rounded-lg">ყველა სიახლე</Link>
+        <Link to="/admin/news" className="bg-blue-500 px-2 py-1 rounded-lg">
+          ყველა სიახლე
+        </Link>
       </div>
 
       <form
@@ -62,13 +96,14 @@ const AddNews = () => {
         <div className="mt-10 max-w-[35rem] w-full ">
           <label className="block text-lg">სათაური</label>
           <input
+            // defaultValue={props.action === "create" ? "" : news?.title}
             {...register("title", {
               required: "ეს ველი აუცილებელია",
               maxLength: { value: 250, message: "მაქსიმუმ 250 სიმბოლო" },
             })}
-            className={`w-full bg-transparent border ${
+            className={`w-full bg-transparent border font-sans text-base ${
               errors.title ? "border-red-500" : "border-white"
-            } rounded-lg px-2 py-2 text-lg focus:outline-none focus:border-blue-500 transition-all`}
+            } rounded-lg px-2 py-2 focus:outline-none focus:border-blue-500 transition-all`}
             type="text"
           />
           <p className="text-red-500 mt-1 h-2">
@@ -79,12 +114,13 @@ const AddNews = () => {
         <div className="mt-10 max-w-[35rem] w-full">
           <label className="block text-lg">სრული აღწერა</label>
           <textarea
+            // defaultValue={props.action === "create" ? "" : news?.body}
             {...register("body", {
               required: "ეს ველი აუცილებელია",
             })}
             cols="30"
             rows="10"
-            className={`bg-transparent border rounded-lg w-full text-lg px-2 py-2 ${
+            className={`bg-transparent border rounded-lg w-full  font-sans px-2 py-2 ${
               errors.body ? "border-red-500" : "border-white"
             }`}
           ></textarea>
@@ -109,11 +145,22 @@ const AddNews = () => {
                 >
                   აირჩიე ფოტო
                 </label>
-                <img
-                  className="w-10 h-10 mt-4 mb-4"
-                  src={uploadImg}
-                  alt="upp"
-                />
+                {props.action === "create" && (
+                  <img
+                    className="w-10 h-10 mt-4 mb-4"
+                    src={uploadImg}
+                    alt="upp"
+                  />
+                )}
+                {props.action === "update" && news?.thumbnail && (
+                  <img
+                    src={`${import.meta.env.VITE_BACNEKD_URL}/storage/${
+                      news?.thumbnail
+                    }`}
+                    alt="img from db"
+                    className="w-32 rounded-lg h-auto mt-4"
+                  />
+                )}
               </>
             )}
             {baseImage && (
@@ -128,7 +175,8 @@ const AddNews = () => {
               id="imgupload"
               type="file"
               {...register("thumbnail", {
-                required: "ეს ველი აუცილებელია",
+                required:
+                  props.action === "create" ? "ეს ველი აუცილებელია" : false,
               })}
             />
             <p className="text-red-500 mt-1 h-2">
