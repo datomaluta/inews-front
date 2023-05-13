@@ -1,11 +1,11 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import uploadImg from "../assets/images/uploadimg.png";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useForm, useWatch } from "react-hook-form";
 import { convertBase64 } from "../helpers/ConvertToBaseImage";
 import { createNews, updateNews } from "../services/newsService";
 import useGetData from "../hooks/useGetData";
+import { fetchCSRFToken } from "../services/UserService";
 
 const AddNews = (props) => {
   const formData = new FormData();
@@ -19,7 +19,7 @@ const AddNews = (props) => {
     data: news,
     fetchData: fetchCertainNews,
     error: newsError,
-  } = useGetData(`news/${id}`);
+  } = useGetData(`/api/news/${id}`);
 
   useEffect(() => {
     if (props.action === "update") {
@@ -39,7 +39,6 @@ const AddNews = (props) => {
 
   useEffect(() => {
     if (news) {
-      // setValue("title", news.title);
       reset({ title: news.title, body: news.body });
     }
   }, [news]);
@@ -64,7 +63,9 @@ const AddNews = (props) => {
     {
       props.action === "update" && formData.append("_method", "put");
     }
+
     let response;
+    await fetchCSRFToken();
     if (props.action === "create") {
       response = await createNews(formData).catch((error) =>
         setBackendErrors(error.response.data.errors)
@@ -81,7 +82,7 @@ const AddNews = (props) => {
   };
 
   return (
-    <div className="pb-20">
+    <div className="pb-20 px-8 sm:px-3">
       <div className="flex justify-between items-center text-2xl md:text-xl">
         <h1>სიახლის დამატება</h1>
         <Link to="/admin/news" className="bg-blue-500 px-2 py-1 rounded-lg">

@@ -29,10 +29,10 @@ const Header = (props) => {
           სიახლეები
         </Link>
         <Link
-          to="/admin/add"
+          to="/admin/news"
           className="flex items-center hover:text-blue-500 transition-all"
         >
-          დამატება
+          ადმინკა
         </Link>
       </nav>
     </header>

@@ -6,9 +6,9 @@ const NewsCard = (props) => {
     <Link
       to={`/news/${props.news.id}`}
       key={props.news.id}
-      className="bg-neutral-800  h-80 lg:h-[21.875rem] sm:h-[16rem] rounded-lg overflow-hidden flex flex-col"
+      className="bg-neutral-800  h-80 lg:h-[21.875rem] sm:h-[16rem] rounded-lg overflow-hidden flex flex-col mb-4"
     >
-      <div className="w-full h-52 md:h-64 sm:h-44 bg-blue-500 relative">
+      <div className="w-full h-52 md:h-64 sm:h-44 bg-blue-600 relative">
         <img
           src={`${import.meta.env.VITE_BACNEKD_URL}/storage/${
             props.news?.thumbnail

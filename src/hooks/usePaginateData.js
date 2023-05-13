@@ -11,7 +11,6 @@ const usePaginateData = (url, isNumeric = false) => {
     const response = await getAllNews(url).catch((error) =>
       setError("Something went wrong!")
     );
-    console.log(response);
 
     if (response.statusText === "OK") {
       setError(null);
@@ -24,7 +23,6 @@ const usePaginateData = (url, isNumeric = false) => {
         setData(response.data.data);
       } else {
         setData((currentData) => [...currentData, ...response.data.data]);
-        console.log("here");
       }
     }
 

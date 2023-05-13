@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import usePaginateData from "../hooks/usePaginateData";
 import { dateFormatter } from "../helpers/dateFormatter";
 import { deleteNews } from "../services/newsService";
+import { fetchCSRFToken, logout, sanctumUser } from "../services/UserService";
+import axios from "axios";
+import Auth from "../components/sharedComponents/Auth";
 
 const AdminNews = () => {
+  const navigate = useNavigate();
+
   const [pageNumber, setPageNumber] = useState(1);
   const {
     data: allNews,
     fetchData: fetchAllNews,
     error,
     isLastPage,
-  } = usePaginateData(`news?page=${pageNumber}`, true);
+  } = usePaginateData(`/api/news?page=${pageNumber}`, true);
 
   useEffect(() => {
     fetchAllNews();
@@ -29,8 +34,9 @@ const AdminNews = () => {
 
   const deleteHandler = async (event, id) => {
     event.preventDefault();
+    await fetchCSRFToken();
     const response = await deleteNews(id).catch((error) => {
-      delefteError("წაშლა ვერ მოხერხდა.");
+      deleteError("წაშლა ვერ მოხერხდა.");
     });
 
     if (response.statusText == "OK") {
@@ -38,17 +44,34 @@ const AdminNews = () => {
     }
   };
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    await logout();
+    navigate("/login");
+  };
+
   return (
-    <div className="bg-blue-60 pb-10">
+    <div className="bg-blue-60 pb-10 px-8 sm:px-3">
       {error && <p>დაფიქსირდა შეცდომა</p>}
       <div className="text-2xl sm:text-xl flex items-center justify-between mb-8">
         <h1>სიახლეები</h1>
-        <Link
-          to="/"
-          className="bg-blue-600 px-2 py-1 rounded-lg text-xl sm:text-lg sm:py-[0.1rem]"
-        >
-          საიტზე გადასვლა
-        </Link>
+        <div className="flex items-center gap-2 text-xl sm:text-lg ">
+          <Link
+            className="bg-white text-blue-600 px-2 py-1 rounded-lg  sm:py-[0.1rem]"
+            to="/admin/add"
+          >
+            დამატება
+          </Link>
+          <Link
+            to="/"
+            className="bg-blue-600 px-2 py-1 rounded-lg  sm:py-[0.1rem]"
+          >
+            საიტზე გადასვლა
+          </Link>
+          <form onSubmit={submitHandler}>
+            <button type="submit">გასვლა</button>
+          </form>
+        </div>
       </div>
 
       <div className="bg-neutral-800 rounded-lg px-3 py-1 min-h-[46rem] sm:px-2">
