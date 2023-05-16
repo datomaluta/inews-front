@@ -41,9 +41,30 @@ body {
   background: #555;
 }
 
+/* @font-face {
+  font-family: "akolregular";
+  src: local("akolregular"),
+    url("./assets/fonts/akolregular.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "akolbold";
+  src: local("akolbold"), url("./assets/fonts/akolbold.otf") format("truetype");
+} */
+
 @font-face {
   font-family: "archy";
   src: local("archy"), url("./assets/fonts/archy.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "ninobold";
+  src: local("ninobold"), url("./assets/fonts/ninobold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "bpg";
+  src: local("bpg"), url("./assets/fonts/bpg.ttf") format("truetype");
 }
 
 @tailwind base;

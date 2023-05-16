@@ -21,7 +21,7 @@ const ShowNews = (props) => {
           </>
         )}
       </div>
-      <div className="mt-4 font-serif md:text-sm">
+      <div className="mt-4 font-sans  md:text-sm">
         {props.news?.body.split("\r\n").map((para, index) => (
           <p key={index} className="mb-4">
             {para}

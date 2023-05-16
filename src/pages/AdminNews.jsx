@@ -6,6 +6,7 @@ import { deleteNews } from "../services/newsService";
 import { fetchCSRFToken, logout, sanctumUser } from "../services/UserService";
 import axios from "axios";
 import Auth from "../components/sharedComponents/Auth";
+import LogoutIcon from "../components/icons/LogoutIcon";
 
 const AdminNews = () => {
   const navigate = useNavigate();
@@ -53,23 +54,31 @@ const AdminNews = () => {
   return (
     <div className="bg-blue-60 pb-10 px-8 sm:px-3">
       {error && <p>დაფიქსირდა შეცდომა</p>}
-      <div className="text-2xl sm:text-xl flex items-center justify-between mb-8">
-        <h1>სიახლეები</h1>
-        <div className="flex items-center gap-2 text-xl sm:text-lg ">
+      <div className="text-xl sm:text-base flex items-center justify-between mb-8">
+        <Link
+          to="/"
+          className="bg-blue-600 px-2 py-2 rounded-lg  sm:py-[0.1rem]"
+        >
+          საიტზე გადასვლა
+        </Link>
+        <div className="flex items-center gap-2 text-xl sm:text-base ">
           <Link
             className="bg-white text-blue-600 px-2 py-1 rounded-lg  sm:py-[0.1rem]"
             to="/admin/add"
           >
             დამატება
           </Link>
-          <Link
-            to="/"
-            className="bg-blue-600 px-2 py-1 rounded-lg  sm:py-[0.1rem]"
-          >
-            საიტზე გადასვლა
-          </Link>
+
           <form onSubmit={submitHandler}>
-            <button type="submit">გასვლა</button>
+            <button
+              className="flex items-center bg-blue-600 px-2 py-1 rounded-lg sm:py-[0.1rem]"
+              type="submit"
+            >
+              <span>გასვლა</span>
+              <span className="md:hidden">
+                <LogoutIcon />
+              </span>
+            </button>
           </form>
         </div>
       </div>
@@ -88,7 +97,7 @@ const AdminNews = () => {
 
                 <Link
                   to={`/admin/news/${news.id}`}
-                  className="text-lg md:text-sm"
+                  className="text-lg md:text-sm hover:text-blue-600"
                 >
                   {news.title}
                 </Link>

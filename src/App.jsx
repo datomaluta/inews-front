@@ -10,7 +10,7 @@ import Auth from "./components/sharedComponents/Auth";
 
 function App() {
   return (
-    <div className="max-w-[75rem] bg-neutral-900 min-h-screen mx-auto  pt-4  font-archy">
+    <div className="max-w-[75rem] bg-neutral-900 min-h-screen mx-auto  pt-4 ">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/news/:id" element={<Detail />} />
@@ -40,6 +40,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/allnews" element={<Header />} />
       </Routes>
     </div>
   );
