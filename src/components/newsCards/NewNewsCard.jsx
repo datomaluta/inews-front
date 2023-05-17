@@ -20,7 +20,7 @@ const NewNewsCard = (props) => {
           className="w-full h-full object-cover"
         />
 
-        <div className="bg-neutral-900 bg-opacity-80 absolute bottom-2 right-2 px-2 py-1 rounded-lg sm:text-sm">
+        <div className="bg-neutral-900 bg-opacity-80 absolute bottom-2 right-2 px-2 py-1 rounded-lg text-sm">
           {timeAgo(props.news.created_at)}
         </div>
       </div>

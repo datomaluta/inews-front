@@ -5,7 +5,8 @@ const TextOnImageCard = (props) => {
   return (
     <Link
       to={`/news/${props.news.id}`}
-      className="bg-green-400 lg:w-1/2 sm:w-full h-full lg:h-[14rem] rounded-lg rounded-b overflow-hidden relative border-b-4 border-primary"
+      // lg:h-[14rem]
+      className="bg-green-400 lg:w-1/2 sm:w-full h-full lg:h-[14rem]  rounded-lg rounded-b overflow-hidden relative border-b-4 border-primary"
     >
       <img
         src={`${import.meta.env.VITE_BACNEKD_URL}/storage/${
