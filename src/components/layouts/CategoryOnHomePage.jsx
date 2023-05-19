@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const CategoryOnHomePage = (props) => {
   return (
-    <div className="font-bpg mb-6 sm:mb-4">
+    <div className="font-bpg mb-6 sm:mb-4 min-h-[16rem] text-neutral-900 dark:text-white">
       <div className="flex items-center gap-2">
         <span className="h-3 w-3 block bg-secondary rounded shrink-0"></span>
         <Link className="text-lg mt-1">{props.categoryName}</Link>

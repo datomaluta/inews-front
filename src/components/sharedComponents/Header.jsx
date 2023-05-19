@@ -7,6 +7,7 @@ import HeaderNavbar from "../headerComponents/HeaderNavbar";
 import Theme from "../headerComponents/Theme";
 import SearchInput from "../headerComponents/SearchInput";
 import SearchIconHeader from "../headerComponents/SearchIconHeader";
+import useColorMode from "../../hooks/theme/useColorMode";
 
 const Header = (props) => {
   const [headerModalIsOpen, setHeaderModalIsOpen] = useState(false);
@@ -22,12 +23,6 @@ const Header = (props) => {
 
   const searchInputChangeHandler = () => {
     setSearchInputIsOpen((currentState) => !currentState);
-  };
-
-  const lightModeChangeHandler = () => {
-    setLightMode((currState) => !currState);
-    console.log("clicekd");
-    console.log(lightMode);
   };
 
   return (
@@ -52,7 +47,7 @@ const Header = (props) => {
           <SearchInput searchInputChangeHandler={searchInputChangeHandler} />
         )}
 
-        <Theme changeHandler={lightModeChangeHandler} lightMode={lightMode} />
+        <Theme />
       </div>
     </header>
   );

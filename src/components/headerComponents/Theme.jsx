@@ -1,14 +1,15 @@
+import useColorMode from "../../hooks/theme/useColorMode";
 import LightModeIcon from "../icons/LightModeIcon";
 import NightModeIcon from "../icons/NightModeIcon";
 
-const Theme = (props) => {
+const Theme = () => {
+  const [colorMode, setColorMode] = useColorMode();
   return (
     <button
-      onClick={props.changeHandler}
+      onClick={() => setColorMode(colorMode === "light" ? "dark" : "light")}
       className="h-8 sm:h-7 w-8 sm:w-7 flex items-center justify-center bg-white rounded-full group hover:bg-secondary overflow-hidden"
     >
-      {!props.lightMode && <NightModeIcon />}
-      {props.lightMode && <LightModeIcon />}
+      {colorMode === "dark" ? <NightModeIcon /> : <LightModeIcon />}
     </button>
   );
 };

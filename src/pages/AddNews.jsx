@@ -1,19 +1,48 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import uploadImg from "../assets/images/uploadimg.png";
 import { useEffect, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { convertBase64 } from "../helpers/ConvertToBaseImage";
-import { createNews, updateNews } from "../services/newsService";
+import {
+  createNews,
+  getAllCategories,
+  updateNews,
+} from "../services/newsService";
 import useGetData from "../hooks/useGetData";
 import { fetchCSRFToken } from "../services/UserService";
+import Select from "react-select";
+// import "react-select/dist/react-select.css";
 
 const AddNews = (props) => {
   const formData = new FormData();
   const navigate = useNavigate();
   const { id } = useParams();
-
   const [baseImage, setBaseImage] = useState();
   const [backendErrors, setBackendErrors] = useState();
+
+  const [categories, setCategories] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [defaultOptions, setDefaultOptions] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await getAllCategories().catch((error) =>
+        console.log(error)
+      );
+      setCategories(response.data.data);
+    };
+
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      let opts = categories.map((category) => {
+        return { value: category.id, label: category.name };
+      });
+      setOptions(opts);
+    }
+  }, [categories]);
 
   const {
     data: news,
@@ -37,11 +66,17 @@ const AddNews = (props) => {
   } = useForm();
   const image = useWatch({ control, name: "thumbnail" });
 
+  // console.log(news);
+
   useEffect(() => {
-    if (news) {
-      reset({ title: news.title, body: news.body });
+    if (news && defaultOptions) {
+      reset({
+        title: news.news.title,
+        body: news.news.body,
+        category: defaultOptions,
+      });
     }
-  }, [news]);
+  }, [news, defaultOptions]);
 
   useEffect(() => {
     const baseImageSetter = async () => {
@@ -54,8 +89,10 @@ const AddNews = (props) => {
   }, [image]);
 
   const submitHandler = async (data) => {
+    // console.log(data);
     formData.append("title", data.title);
     formData.append("body", data.body);
+    formData.append("category", JSON.stringify(data.category));
     {
       data.thumbnail.length !== 0 &&
         formData.append("thumbnail", data.thumbnail[0]);
@@ -70,6 +107,7 @@ const AddNews = (props) => {
       response = await createNews(formData).catch((error) =>
         setBackendErrors(error.response.data.errors)
       );
+      // console.log(response);
     } else {
       response = await updateNews(id, formData).catch((error) => {
         setBackendErrors(error.response.data.errors);
@@ -79,6 +117,36 @@ const AddNews = (props) => {
     if (response?.statusText === "OK") {
       navigate("/admin/news");
     }
+  };
+
+  useEffect(() => {
+    if (news && options) {
+      let opts = news.category.map((category) => {
+        return { value: category.id, label: category.name };
+      });
+      setDefaultOptions(opts);
+    }
+  }, [news, options]);
+
+  const categoryInputStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      color: "red",
+      width: "full",
+      border: "1px solid gray",
+      borderRadius: "4px",
+      boxShadow: state.isFocused ? "0 0 0 2px blue" : "none",
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "blue", // Change the input text color
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      color: state.isSelected ? "white" : "black", // Change the option text color
+      backgroundColor: state.isSelected ? "blue" : "white", // Change the option background color
+      // Add more custom styles as needed
+    }),
   };
 
   return (
@@ -111,6 +179,26 @@ const AddNews = (props) => {
             {errors.title ? errors?.title.message : ""}
             {backendErrors?.title ? backendErrors.title : ""}
           </p>
+        </div>
+        <div className=" w-full max-w-[35rem]">
+          <label htmlFor="" className="mb-1 block">
+            კატეგორია
+          </label>
+          {options.length > 0 && (
+            <Controller
+              // defaultValue={defaultOptions}
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  isMulti
+                  options={options}
+                  styles={categoryInputStyles}
+                />
+              )}
+            />
+          )}
         </div>
         <div className="mt-10 max-w-[35rem] w-full">
           <label className="block text-lg">სრული აღწერა</label>
@@ -153,10 +241,10 @@ const AddNews = (props) => {
                     alt="upp"
                   />
                 )}
-                {props.action === "update" && news?.thumbnail && (
+                {props.action === "update" && news?.news.thumbnail && (
                   <img
                     src={`${import.meta.env.VITE_BACNEKD_URL}/storage/${
-                      news?.thumbnail
+                      news?.news.thumbnail
                     }`}
                     alt="img from db"
                     className="w-32 rounded-lg h-auto mt-4"

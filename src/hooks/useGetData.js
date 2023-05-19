@@ -10,10 +10,11 @@ const useGetData = (url) => {
     const response = await getAllNews(url).catch((error) =>
       setError("Something went wrong!")
     );
+    console.log(response);
     if (response.statusText === "OK") {
       setError(null);
     }
-    setData(response.data.data);
+    setData({ news: response.data.data, category: response.data.category });
   };
 
   return { data, fetchData, error };

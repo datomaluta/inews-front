@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -12,6 +13,7 @@ export default {
         primary: "#1C5EC3",
         // secondary: "#009AE7",
         secondary: "#3b82f6",
+        darkbg: "#121212",
       },
       backgroundImage: {
         blackgr: "linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0));",

@@ -10,38 +10,40 @@ import Auth from "./components/sharedComponents/Auth";
 
 function App() {
   return (
-    <div className="max-w-[75rem] bg-neutral-900 min-h-screen mx-auto  pt-4 ">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/news/:id" element={<Detail />} />
-        <Route
-          path="/admin/add"
-          element={
-            <Auth>
-              <AddNews action="create" />
-            </Auth>
-          }
-        />
-        <Route
-          path="/admin/news"
-          element={
-            <Auth>
-              <AdminNews />
-            </Auth>
-          }
-        />
-        <Route
-          path="/admin/news/:id"
-          element={
-            <Auth>
-              <AddNews action="update" />
-            </Auth>
-          }
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/allnews" element={<Header />} />
-      </Routes>
+    <div className=" bg-neutral-100 dark:bg-darkbg transition-all text-white">
+      <div className="max-w-[75rem] bg-white dark:bg-neutral-900 min-h-screen mx-auto  pt-4 ">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/news/:id" element={<Detail />} />
+          <Route
+            path="/admin/add"
+            element={
+              <Auth>
+                <AddNews action="create" />
+              </Auth>
+            }
+          />
+          <Route
+            path="/admin/news"
+            element={
+              <Auth>
+                <AdminNews />
+              </Auth>
+            }
+          />
+          <Route
+            path="/admin/news/:id"
+            element={
+              <Auth>
+                <AddNews action="update" />
+              </Auth>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/allnews" element={<Header />} />
+        </Routes>
+      </div>
     </div>
   );
 }

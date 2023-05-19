@@ -19,3 +19,7 @@ export const deleteNews = async (id) => {
 export const getNewsByCategory = async (category, count) => {
   return await instance.get(`/api/news/${category}/${count}`);
 };
+
+export const getAllCategories = async () => {
+  return await instance.get("/api/categories");
+};

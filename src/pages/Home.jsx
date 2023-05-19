@@ -16,6 +16,7 @@ import CategoryOnHomePage from "../components/layouts/CategoryOnHomePage";
 import NewNewsCard from "../components/newsCards/NewNewsCard";
 import useGetNewsByCategory from "../hooks/useGetNewsByCategory";
 import { getNewsByCategory } from "../services/newsService";
+import LoadingSpinner from "../components/sharedComponents/LoadingSpinner";
 
 const Home = () => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -73,8 +74,13 @@ const Home = () => {
 
   return (
     <>
-      <div className="animate-smoothLoad px-8 sm:px-3 mb-4">
+      <div className="animate-smoothLoad px-8 sm:px-3 mb-4 relative">
         <Header />
+        {politicNewsIsLoading && societyNewsIsLoading && sportNewsIsLoading && (
+          <div className="w-full h-screen bg-neutral-900 bg-opacity-75 text-4xl absolute top-0 left-0 flex items-center justify-center z-50">
+            <LoadingSpinner />
+          </div>
+        )}
         <div className="mt-20">
           {error && <p className="text-xl gap-4">დაფიქსირდა შეცდომა</p>}
           {/* one main and two semi-main*/}
@@ -98,12 +104,17 @@ const Home = () => {
           {/* three at row */}
           <CategoryOnHomePage categoryName="პოლიტიკა">
             <div className="grid grid-cols-4 gap-4 sm:gap-4 mt-4 lg:grid-cols-2 md:grid-cols-1">
-              {politicNewsIsLoading && <div className="h-48">isloading</div>}
               {politicNewsError && <p>{politicNewsError}</p>}
               {politicNews &&
                 politicNews.map(
                   (news, index) =>
-                    index < 4 && <NewNewsCard key={news.id} news={news} />
+                    index < 4 && (
+                      <NewNewsCard
+                        key={news.id}
+                        news={news}
+                        isLoading={politicNewsIsLoading}
+                      />
+                    )
                 )}
             </div>
           </CategoryOnHomePage>
