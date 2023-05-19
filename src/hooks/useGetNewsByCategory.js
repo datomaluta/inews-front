@@ -12,9 +12,9 @@ const useGetNewsByCategory = (category, count) => {
       setError("დაფიქსირდა შეცდომა");
       setIsLoading(false);
     });
-    setData(response.data.data);
+    setData(response?.data?.data);
     setIsLoading(false);
-    console.log(response.data.data);
+    console.log(response?.data?.data);
   };
 
   return { data, error, isLoading, fetchData };

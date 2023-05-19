@@ -8,6 +8,7 @@ export default {
         archy: "archy",
         ninobold: "ninobold",
         bpg: "bpg",
+        arial: "arial",
       },
       colors: {
         primary: "#1C5EC3",

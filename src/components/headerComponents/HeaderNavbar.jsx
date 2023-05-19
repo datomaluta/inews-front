@@ -5,9 +5,9 @@ const HeaderNavbar = () => {
   return (
     <nav className="flex gap-4 text-base font-bpg lg:hidden">
       <NavbarLink text="ყველა სიახლე" href="/allnews" />
-      <NavbarLink text="საზოგადოება" href="/society" />
-      <NavbarLink text="პოლიტიკა" href="/politics" />
-      <NavbarLink text="სპორტი" href="/sport" />
+      <NavbarLink text="საზოგადოება" href="/allnews/society" />
+      <NavbarLink text="პოლიტიკა" href="/allnews/politic" />
+      <NavbarLink text="სპორტი" href="/allnews/sport" />
       <NavbarLink text="სხვა" href="/other" />
     </nav>
   );

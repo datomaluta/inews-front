@@ -26,7 +26,7 @@ const Header = (props) => {
   };
 
   return (
-    <header className="flex h-16 animate-smoothLoad items-center justify-between bg-primary py-3 px-8 sm:px-3 sm:py-0 rounded-b fixed z-50 top-0 left-1/2 -translate-x-1/2 max-w-[75rem] w-full shadow-2xl">
+    <header className="flex text-white h-16 animate-smoothLoad items-center justify-between bg-primary py-3 px-8 sm:px-3 sm:py-0 rounded-b fixed z-50 top-0 left-1/2 -translate-x-1/2 max-w-[75rem] w-full shadow-2xl">
       {!headerModalIsOpen && (
         <button onClick={modalOpenerHandler} className="hidden lg:block">
           <Burger />

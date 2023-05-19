@@ -71,8 +71,8 @@ const AddNews = (props) => {
   useEffect(() => {
     if (news && defaultOptions) {
       reset({
-        title: news.news.title,
-        body: news.news.body,
+        title: news.title,
+        body: news.body,
         category: defaultOptions,
       });
     }
@@ -121,7 +121,7 @@ const AddNews = (props) => {
 
   useEffect(() => {
     if (news && options) {
-      let opts = news.category.map((category) => {
+      let opts = news?.categories.map((category) => {
         return { value: category.id, label: category.name };
       });
       setDefaultOptions(opts);
@@ -148,6 +148,7 @@ const AddNews = (props) => {
       // Add more custom styles as needed
     }),
   };
+  console.log(news?.categories);
 
   return (
     <div className="pb-20 px-8 sm:px-3">
@@ -241,10 +242,10 @@ const AddNews = (props) => {
                     alt="upp"
                   />
                 )}
-                {props.action === "update" && news?.news.thumbnail && (
+                {props.action === "update" && news?.thumbnail && (
                   <img
                     src={`${import.meta.env.VITE_BACNEKD_URL}/storage/${
-                      news?.news.thumbnail
+                      news?.thumbnail
                     }`}
                     alt="img from db"
                     className="w-32 rounded-lg h-auto mt-4"

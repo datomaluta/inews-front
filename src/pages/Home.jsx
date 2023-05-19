@@ -106,16 +106,13 @@ const Home = () => {
             <div className="grid grid-cols-4 gap-4 sm:gap-4 mt-4 lg:grid-cols-2 md:grid-cols-1">
               {politicNewsError && <p>{politicNewsError}</p>}
               {politicNews &&
-                politicNews.map(
-                  (news, index) =>
-                    index < 4 && (
-                      <NewNewsCard
-                        key={news.id}
-                        news={news}
-                        isLoading={politicNewsIsLoading}
-                      />
-                    )
-                )}
+                politicNews.map((news) => (
+                  <NewNewsCard
+                    key={news.id}
+                    news={news}
+                    isLoading={politicNewsIsLoading}
+                  />
+                ))}
             </div>
           </CategoryOnHomePage>
 
@@ -123,10 +120,9 @@ const Home = () => {
             <div className="grid grid-cols-4 gap-4 sm:gap-4 mt-4 lg:grid-cols-2 md:grid-cols-1">
               {societyNewsError && <p>{societyNewsError}</p>}
               {societyNews &&
-                societyNews.map(
-                  (news, index) =>
-                    index < 4 && <NewNewsCard key={news.id} news={news} />
-                )}
+                societyNews.map((news) => (
+                  <NewNewsCard key={news.id} news={news} />
+                ))}
             </div>
           </CategoryOnHomePage>
 
@@ -134,10 +130,9 @@ const Home = () => {
             <div className="grid grid-cols-4 gap-4 sm:gap-4 mt-4 lg:grid-cols-2 md:grid-cols-1">
               {sportNewsError && <p>{sportNewsError}</p>}
               {sportNews &&
-                sportNews.map(
-                  (news, index) =>
-                    index < 4 && <NewNewsCard key={news.id} news={news} />
-                )}
+                sportNews.map((news) => (
+                  <NewNewsCard key={news.id} news={news} />
+                ))}
             </div>
           </CategoryOnHomePage>
 

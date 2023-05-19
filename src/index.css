@@ -67,6 +67,11 @@ body {
   src: local("bpg"), url("./assets/fonts/bpg.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "arial";
+  src: local("arial"), url("./assets/fonts/arial.ttf") format("truetype");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

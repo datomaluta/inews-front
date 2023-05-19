@@ -7,10 +7,11 @@ import AdminNews from "./pages/AdminNews";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Auth from "./components/sharedComponents/Auth";
+import CategoryAllNews from "./pages/CategoryAllNews";
 
 function App() {
   return (
-    <div className=" bg-neutral-100 dark:bg-darkbg transition-all text-white">
+    <div className=" bg-neutral-100 dark:bg-darkbg transition-all text-neutral-900 dark:text-white font-bpg">
       <div className="max-w-[75rem] bg-white dark:bg-neutral-900 min-h-screen mx-auto  pt-4 ">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -41,7 +42,19 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/allnews" element={<Header />} />
+          <Route path="/allnews" element={<CategoryAllNews category="all" />} />
+          <Route
+            path="/allnews/society"
+            element={<CategoryAllNews category="society" />}
+          />
+          <Route
+            path="/allnews/politic"
+            element={<CategoryAllNews category="politic" />}
+          />
+          <Route
+            path="/allnews/sport"
+            element={<CategoryAllNews category="sport" />}
+          />
         </Routes>
       </div>
     </div>

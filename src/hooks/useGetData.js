@@ -2,7 +2,7 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { getAllNews } from "../services/newsService";
 
-const useGetData = (url) => {
+const useGetData = (url, type) => {
   const [data, setData] = useState();
   const [error, setError] = useState();
 
@@ -11,10 +11,17 @@ const useGetData = (url) => {
       setError("Something went wrong!")
     );
     console.log(response);
+    console.log(response.data.data.categories);
     if (response.statusText === "OK") {
       setError(null);
     }
-    setData({ news: response.data.data, category: response.data.category });
+    // if (type === "all") {
+    //   setData(response.data.data);
+    // } else {
+    //   setData({ news: response.data.data, category: response.data.category });
+    // }
+    // setData({ news: response.data.data, category: response.data.category });
+    setData(response.data.data);
   };
 
   return { data, fetchData, error };
