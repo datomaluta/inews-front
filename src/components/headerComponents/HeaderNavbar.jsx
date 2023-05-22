@@ -8,7 +8,6 @@ const HeaderNavbar = () => {
       <NavbarLink text="საზოგადოება" href="/allnews/society" />
       <NavbarLink text="პოლიტიკა" href="/allnews/politic" />
       <NavbarLink text="სპორტი" href="/allnews/sport" />
-      <NavbarLink text="სხვა" href="/other" />
     </nav>
   );
 };

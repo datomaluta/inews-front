@@ -17,7 +17,12 @@ export const deleteNews = async (id) => {
 };
 
 export const getNewsByCategory = async (category, count) => {
-  return await instance.get(`/api/news/${category}/${count}`);
+  return await instance.get(`/api/news/${category}/${count}}`);
+  `/api/allnews/${props.category}?page=${pageNumber}`;
+};
+
+export const getAllNewsByCategoryForHomePage = async (url) => {
+  return await instance.get(url);
 };
 
 export const getAllCategories = async () => {

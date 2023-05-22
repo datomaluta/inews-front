@@ -1,32 +1,55 @@
 import { useEffect, useState } from "react";
 import Header from "../components/sharedComponents/Header";
-import axios from "axios";
-import { getNewsByCategory } from "../services/newsService";
-import useGetData from "../hooks/as";
+import {
+  getAllNews,
+  getAllNewsByCategoryForHomePage,
+  getNewsByCategory,
+} from "../services/newsService";
 import useGetNewsByCategory from "../hooks/useGetNewsByCategory";
 import NewNewsCard from "../components/newsCards/NewNewsCard";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import usePaginateData from "../hooks/usePaginateData";
 
 const CategoryAllNews = (props) => {
   const [categoryNameInGeorgian, setCategoryNameInGeorgian] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
   const location = useLocation();
 
   const { data, error, isLoading, fetchData } = useGetNewsByCategory(
     props.category,
-    "all"
+    "all",
+    pageNumber
   );
 
   const {
     data: allNews,
     fetchData: fetchAllNews,
-    error: allNewsErorr,
-  } = useGetData(`/api/news`);
+    error: er,
+    isLastPage,
+  } = usePaginateData(`/api/news?page=${pageNumber}`, false, getAllNews);
+
+  const {
+    data: categoryNews,
+    fetchData: fetchCategoryNews,
+    error: err,
+    isLastPage: isCategoryNewsLastPage,
+    setData: setCategoryData,
+  } = usePaginateData(
+    `/api/allnews/${props.category}?page=${pageNumber}`,
+    false,
+    getAllNewsByCategoryForHomePage
+  );
+
+  useEffect(() => {
+    setPageNumber(1);
+    setCategoryData([]);
+  }, [props.category]);
 
   useEffect(() => {
     if (props.category === "all") {
       fetchAllNews();
     } else {
-      fetchData();
+      fetchCategoryNews();
     }
 
     if (props.category === "politic") {
@@ -38,7 +61,13 @@ const CategoryAllNews = (props) => {
     } else {
       setCategoryNameInGeorgian("ყველა სიახლე");
     }
-  }, [location.pathname]);
+  }, [location.pathname, pageNumber]);
+
+  const loadMoreHandler = () => {
+    setPageNumber((currentNumber) => currentNumber + 1);
+  };
+
+  let loadMoreButtonIsVisible = isLastPage || isCategoryNewsLastPage;
 
   return (
     <div className="mt-20 px-4">
@@ -53,9 +82,18 @@ const CategoryAllNews = (props) => {
         {error && <p>{error}</p>}
         {props.category === "all"
           ? allNews?.map((news) => <NewNewsCard key={news.id} news={news} />)
-          : data?.map((news) => <NewNewsCard key={news.id} news={news} />)}
-        {/* {data && data.map((news) => <NewNewsCard key={news.id} news={news} />)} */}
+          : categoryNews?.map((news) => (
+              <NewNewsCard key={news.id} news={news} />
+            ))}
       </div>
+      {!loadMoreButtonIsVisible && (
+        <button
+          onClick={loadMoreHandler}
+          className="bg-blue-600 px-4 py-1 rounded-lg mt-10 text-lg mx-auto block"
+        >
+          მეტი სიახლე
+        </button>
+      )}
     </div>
   );
 };

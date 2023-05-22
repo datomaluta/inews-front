@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePaginateData from "../hooks/usePaginateData";
 import { dateFormatter } from "../helpers/dateFormatter";
-import { deleteNews } from "../services/newsService";
+import { deleteNews, getAllNews } from "../services/newsService";
 import { fetchCSRFToken, logout, sanctumUser } from "../services/UserService";
-import axios from "axios";
-import Auth from "../components/sharedComponents/Auth";
 import LogoutIcon from "../components/icons/LogoutIcon";
 
 const AdminNews = () => {
@@ -17,7 +15,7 @@ const AdminNews = () => {
     fetchData: fetchAllNews,
     error,
     isLastPage,
-  } = usePaginateData(`/api/news?page=${pageNumber}`, true);
+  } = usePaginateData(`/api/news?page=${pageNumber}`, true, getAllNews);
 
   useEffect(() => {
     fetchAllNews();

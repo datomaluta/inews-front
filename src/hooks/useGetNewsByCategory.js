@@ -14,7 +14,6 @@ const useGetNewsByCategory = (category, count) => {
     });
     setData(response?.data?.data);
     setIsLoading(false);
-    console.log(response?.data?.data);
   };
 
   return { data, error, isLoading, fetchData };
