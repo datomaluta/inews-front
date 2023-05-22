@@ -55,9 +55,7 @@ const Home = () => {
       <div className="animate-smoothLoad px-8 sm:px-3 mb-4 relative">
         <Header />
         {politicNewsIsLoading && societyNewsIsLoading && sportNewsIsLoading && (
-          <div className="w-full h-screen bg-neutral-900 bg-opacity-75 text-4xl absolute top-0 left-0 flex items-center justify-center z-50">
-            <LoadingSpinner />
-          </div>
+          <LoadingSpinner />
         )}
         <div className="mt-20">
           {/* one main and two semi-main*/}

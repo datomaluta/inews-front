@@ -9,22 +9,26 @@ const usePaginateData = (url, isNumeric = false, func) => {
   console.log(url);
 
   const fetchData = async () => {
+    console.log(url);
     const response = await func(url).catch((error) =>
       setError("Something went wrong!")
     );
-    console.log(response.data.data);
+    console.log(response?.data?.data);
 
-    if (response.statusText === "OK") {
+    if (response?.statusText === "OK") {
       setError(null);
     }
 
     if (isNumeric) {
-      setData(response.data.data.data);
+      setData(response?.data?.data?.data);
     } else {
       if (data.length === 0) {
-        setData(response.data.data.data);
+        setData(response?.data?.data?.data);
       } else {
-        setData((currentData) => [...currentData, ...response.data.data.data]);
+        setData((currentData) => [
+          ...currentData,
+          ...response?.data?.data?.data,
+        ]);
       }
     }
 

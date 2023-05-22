@@ -23,7 +23,7 @@ const Detail = () => {
     data: news,
     fetchData: fetchCertainNews,
     error: newsError,
-  } = useGetData(`/api/news/${id}`);
+  } = useGetData(`/api/news/${id}`, true);
 
   useEffect(() => {
     fetchData();

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { getAllNews } from "../services/newsService";
 
-const useGetData = (url, type) => {
+const useGetData = (url, oneNews) => {
   const [data, setData] = useState();
   const [error, setError] = useState();
 
@@ -14,7 +14,11 @@ const useGetData = (url, type) => {
     if (response.statusText === "OK") {
       setError(null);
     }
-    setData(response.data.data);
+    if (oneNews) {
+      setData(response.data.data);
+    } else {
+      setData(response.data.data.data);
+    }
   };
 
   return { data, fetchData, error };

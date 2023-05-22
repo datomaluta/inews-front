@@ -13,19 +13,16 @@ import usePaginateData from "../hooks/usePaginateData";
 const CategoryAllNews = (props) => {
   const [categoryNameInGeorgian, setCategoryNameInGeorgian] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
+  // const [loadMoreButtonIsVisible, setLoadMoreButtonIsVisible] = useState(true);
   const location = useLocation();
-
-  const { data, error, isLoading, fetchData } = useGetNewsByCategory(
-    props.category,
-    "all",
-    pageNumber
-  );
+  const [showLoadMore, setShowLoadMore] = useState();
 
   const {
     data: allNews,
     fetchData: fetchAllNews,
     error: er,
     isLastPage,
+    setData: setAllNewsData,
   } = usePaginateData(`/api/news?page=${pageNumber}`, false, getAllNews);
 
   const {
@@ -40,9 +37,13 @@ const CategoryAllNews = (props) => {
     getAllNewsByCategoryForHomePage
   );
 
+  // let loadMoreButtonIsVisible = isLastPage || isCategoryNewsLastPage;
+
   useEffect(() => {
     setPageNumber(1);
     setCategoryData([]);
+    setAllNewsData([]);
+    // loadMoreButtonIsVisible = true;
   }, [props.category]);
 
   useEffect(() => {
@@ -61,13 +62,20 @@ const CategoryAllNews = (props) => {
     } else {
       setCategoryNameInGeorgian("ყველა სიახლე");
     }
+    // loadMoreButtonIsVisible = true;
   }, [location.pathname, pageNumber]);
 
   const loadMoreHandler = () => {
     setPageNumber((currentNumber) => currentNumber + 1);
   };
 
-  let loadMoreButtonIsVisible = isLastPage || isCategoryNewsLastPage;
+  // useEffect(() => {
+  //   if (isLastPage || isCategoryNewsLastPage) {
+  //     setLoadMoreButtonIsVisible(false);
+  //   } else {
+  //     setLoadMoreButtonIsVisible(true);
+  //   }
+  // }, [pageNumber, props.category]);
 
   return (
     <div className="mt-20 px-4">
@@ -79,17 +87,25 @@ const CategoryAllNews = (props) => {
       </div>
 
       <div className="grid grid-cols-4 gap-4 sm:gap-4 mt-4 lg:grid-cols-2 md:grid-cols-1">
-        {error && <p>{error}</p>}
+        {/* {error && <p>{error}</p>} */}
         {props.category === "all"
           ? allNews?.map((news) => <NewNewsCard key={news.id} news={news} />)
           : categoryNews?.map((news) => (
               <NewNewsCard key={news.id} news={news} />
             ))}
       </div>
-      {!loadMoreButtonIsVisible && (
+      {!isLastPage && props.category === "all" && (
         <button
           onClick={loadMoreHandler}
-          className="bg-blue-600 px-4 py-1 rounded-lg mt-10 text-lg mx-auto block"
+          className="bg-blue-600 px-4 py-1 rounded-lg mt-10 text-lg mx-auto block text-white"
+        >
+          მეტი სიახლე
+        </button>
+      )}
+      {!isCategoryNewsLastPage && props.category !== "all" && (
+        <button
+          onClick={loadMoreHandler}
+          className="bg-blue-600 px-4 py-1 rounded-lg mt-10 text-lg mx-auto block text-white"
         >
           მეტი სიახლე
         </button>

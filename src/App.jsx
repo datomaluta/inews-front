@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Auth from "./components/sharedComponents/Auth";
 import CategoryAllNews from "./pages/CategoryAllNews";
+import ForSearchResult from "./pages/ForSearchResult";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             path="/allnews/sport"
             element={<CategoryAllNews category="sport" />}
           />
+          <Route path="/search" element={<ForSearchResult />} />
         </Routes>
       </div>
     </div>
