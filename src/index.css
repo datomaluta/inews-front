@@ -1,12 +1,6 @@
 :root {
-  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   line-height: 1.5;
   font-weight: 400;
-
-  /* color-scheme: light dark; */
-  /* color: rgba(255, 255, 255, 0.87); */
-  /* background-color: #121212; */
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -40,17 +34,6 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-/* @font-face {
-  font-family: "akolregular";
-  src: local("akolregular"),
-    url("./assets/fonts/akolregular.otf") format("truetype");
-}
-
-@font-face {
-  font-family: "akolbold";
-  src: local("akolbold"), url("./assets/fonts/akolbold.otf") format("truetype");
-} */
 
 @font-face {
   font-family: "archy";

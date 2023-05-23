@@ -1,6 +1,4 @@
-import axios from "axios";
-import { useCallback, useState } from "react";
-import { getAllNews } from "../services/newsService";
+import { useState } from "react";
 
 const usePaginateData = (url, isNumeric = false, func) => {
   const [data, setData] = useState([]);
@@ -29,7 +27,7 @@ const usePaginateData = (url, isNumeric = false, func) => {
       }
     }
 
-    if (!response?.data.data.next_page_url) {
+    if (!response?.data?.data.next_page_url) {
       setIsLastPage(true);
     } else {
       setIsLastPage(false);

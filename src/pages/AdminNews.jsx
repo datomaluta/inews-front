@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import usePaginateData from "../hooks/usePaginateData";
-import { dateFormatter } from "../helpers/dateFormatter";
 import { deleteNews, getAllNews } from "../services/newsService";
 import { fetchCSRFToken, logout, sanctumUser } from "../services/UserService";
 import LogoutIcon from "../components/icons/LogoutIcon";
-import useColorMode from "../hooks/theme/useColorMode";
 import Theme from "../components/headerComponents/Theme";
 
 const AdminNews = () => {
@@ -122,7 +120,7 @@ const AdminNews = () => {
         {pageNumber !== 1 ? (
           <button
             onClick={prevPageHandler}
-            className="bg-blue-600 w-12 px-2 py-2 rounded-lgtext-white"
+            className="bg-blue-600 w-16 px-2 py-2 rounded-lg text-white"
           >
             უკან
           </button>

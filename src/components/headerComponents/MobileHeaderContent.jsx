@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CloseIcon from "../icons/CloseIcon";
 import logo from "../../assets/images/logo-white.png";
 
 const MobileHeaderContent = (props) => {
+  const navigate = useNavigate();
+  const switcherHandler = (href) => {
+    navigate(href);
+    props.closer();
+  };
   return (
     <div className="fixed animate-smoothLoad top-0 left-0 bg-primary w-screen h-screen z-50 flex gap-4 flex-col justify-center items-center">
       <div className="bg-blackgr w-full h-full absolute z-20"></div>
@@ -12,15 +17,24 @@ const MobileHeaderContent = (props) => {
       <Link className="text-xl border-b pb-1 border-white z-30" to="/">
         ყველა სიახლე
       </Link>
-      <Link className="text-xl border-b border-white z-30 " to="/admin/news">
+      <button
+        className="text-xl border-b border-white z-30 "
+        onClick={() => switcherHandler("/allnews/society")}
+      >
         საზოგადოება
-      </Link>
-      <Link className="text-xl border-b border-white z-30 " to="/admin/news">
+      </button>
+      <button
+        className="text-xl border-b border-white z-30 "
+        onClick={() => switcherHandler("/allnews/politic")}
+      >
         პოლიტიკა
-      </Link>
-      <Link className="text-xl border-b border-white z-30 " to="/admin/news">
+      </button>
+      <button
+        className="text-xl border-b border-white z-30 "
+        onClick={() => switcherHandler("/allnews/sport")}
+      >
         სპორტი
-      </Link>
+      </button>
       <button onClick={props.closer} className="absolute top-4 left-4 z-50">
         <CloseIcon />
       </button>

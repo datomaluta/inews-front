@@ -5,7 +5,6 @@ import {
   getAllNewsByCategoryForHomePage,
   getNewsByCategory,
 } from "../services/newsService";
-import useGetNewsByCategory from "../hooks/useGetNewsByCategory";
 import NewNewsCard from "../components/newsCards/NewNewsCard";
 import { useLocation } from "react-router-dom";
 import usePaginateData from "../hooks/usePaginateData";
@@ -13,7 +12,6 @@ import usePaginateData from "../hooks/usePaginateData";
 const CategoryAllNews = (props) => {
   const [categoryNameInGeorgian, setCategoryNameInGeorgian] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
-  // const [loadMoreButtonIsVisible, setLoadMoreButtonIsVisible] = useState(true);
   const location = useLocation();
   const [showLoadMore, setShowLoadMore] = useState();
 
@@ -37,13 +35,10 @@ const CategoryAllNews = (props) => {
     getAllNewsByCategoryForHomePage
   );
 
-  // let loadMoreButtonIsVisible = isLastPage || isCategoryNewsLastPage;
-
   useEffect(() => {
     setPageNumber(1);
     setCategoryData([]);
     setAllNewsData([]);
-    // loadMoreButtonIsVisible = true;
   }, [props.category]);
 
   useEffect(() => {
@@ -62,23 +57,14 @@ const CategoryAllNews = (props) => {
     } else {
       setCategoryNameInGeorgian("ყველა სიახლე");
     }
-    // loadMoreButtonIsVisible = true;
   }, [location.pathname, pageNumber]);
 
   const loadMoreHandler = () => {
     setPageNumber((currentNumber) => currentNumber + 1);
   };
 
-  // useEffect(() => {
-  //   if (isLastPage || isCategoryNewsLastPage) {
-  //     setLoadMoreButtonIsVisible(false);
-  //   } else {
-  //     setLoadMoreButtonIsVisible(true);
-  //   }
-  // }, [pageNumber, props.category]);
-
   return (
-    <div className="mt-20 px-4">
+    <div className="mt-20 px-4 pb-16">
       <Header />
       <div className="flex items-center gap-2">
         <span className="h-3 w-3 block bg-secondary rounded shrink-0"></span>

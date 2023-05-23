@@ -1,18 +1,15 @@
-import { Link } from "react-router-dom";
-import Burger from "./Burger";
-import MobileHeaderContent from "./MobileHeaderContent";
 import { useState } from "react";
 import HeaderLogo from "../headerComponents/HeaderLogo";
 import HeaderNavbar from "../headerComponents/HeaderNavbar";
 import Theme from "../headerComponents/Theme";
 import SearchInput from "../headerComponents/SearchInput";
 import SearchIconHeader from "../headerComponents/SearchIconHeader";
-import useColorMode from "../../hooks/theme/useColorMode";
+import BurgerIcon from "../icons/BurgerIcon";
+import MobileHeaderContent from "../headerComponents/MobileHeaderContent";
 
 const Header = (props) => {
   const [headerModalIsOpen, setHeaderModalIsOpen] = useState(false);
   const [searchInputIsOpen, setSearchInputIsOpen] = useState(false);
-  const [lightMode, setLightMode] = useState(false);
 
   const modalOpenerHandler = () => {
     setHeaderModalIsOpen(true);
@@ -29,7 +26,7 @@ const Header = (props) => {
     <header className="flex text-white h-16 animate-smoothLoad items-center justify-between bg-primary py-3 px-8 sm:px-3 sm:py-0 rounded-b fixed z-50 top-0 left-1/2 -translate-x-1/2 max-w-[75rem] w-full shadow-2xl">
       {!headerModalIsOpen && (
         <button onClick={modalOpenerHandler} className="hidden lg:block">
-          <Burger />
+          <BurgerIcon />
         </button>
       )}
       <HeaderLogo />

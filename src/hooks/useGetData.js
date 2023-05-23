@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { getAllNews } from "../services/newsService";
 
 const useGetData = (url, oneNews) => {

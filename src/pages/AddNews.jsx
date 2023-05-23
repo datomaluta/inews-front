@@ -12,7 +12,6 @@ import useGetData from "../hooks/useGetData";
 import { fetchCSRFToken } from "../services/UserService";
 import Select from "react-select";
 import Theme from "../components/headerComponents/Theme";
-// import "react-select/dist/react-select.css";
 
 const AddNews = (props) => {
   const formData = new FormData();
@@ -45,17 +44,17 @@ const AddNews = (props) => {
     }
   }, [categories]);
 
-  const {
-    data: news,
-    fetchData: fetchCertainNews,
-    error: newsError,
-  } = useGetData(`/api/news/${id}`, true);
-
   useEffect(() => {
     if (props.action === "update") {
       fetchCertainNews();
     }
   }, []);
+
+  const {
+    data: news,
+    fetchData: fetchCertainNews,
+    error: newsError,
+  } = useGetData(`/api/news/${id}`, true);
 
   const {
     register,
@@ -136,7 +135,7 @@ const AddNews = (props) => {
     }),
     input: (provided) => ({
       ...provided,
-      color: "blue", // Change the input text color
+      color: "blue",
     }),
     option: (provided, state) => ({
       ...provided,
@@ -144,6 +143,8 @@ const AddNews = (props) => {
       backgroundColor: state.isSelected ? "blue" : "white",
     }),
   };
+
+  console.log(errors);
 
   return (
     <div className="pb-20 px-8 sm:px-3">
@@ -167,7 +168,6 @@ const AddNews = (props) => {
         <div className="mt-10 max-w-[35rem] w-full ">
           <label className="block">სათაური</label>
           <input
-            // defaultValue={props.action === "create" ? "" : news?.title}
             {...register("title", {
               required: "ეს ველი აუცილებელია",
               maxLength: { value: 250, message: "მაქსიმუმ 250 სიმბოლო" },
@@ -179,12 +179,12 @@ const AddNews = (props) => {
             } rounded-lg px-2 py-2 focus:outline-none focus:border-blue-500 transition-all`}
             type="text"
           />
-          <p className="text-red-500 mt-1 h-2">
+          <p className="text-red-500 mt-1 h-2 text-sm">
             {errors.title ? errors?.title.message : ""}
             {backendErrors?.title ? backendErrors.title : ""}
           </p>
         </div>
-        <div className=" w-full max-w-[35rem]">
+        <div className=" w-full max-w-[35rem] mt-8">
           <label htmlFor="" className="mb-1 block">
             კატეგორია
           </label>
@@ -192,6 +192,7 @@ const AddNews = (props) => {
             <Controller
               name="category"
               control={control}
+              rules={{ required: "ეს ველი აუცილებელია" }}
               render={({ field }) => (
                 <Select
                   {...field}
@@ -202,6 +203,9 @@ const AddNews = (props) => {
               )}
             />
           )}
+          <p className="text-red-500 mt-1 h-2 text-sm">
+            {errors.category ? errors?.category.message : ""}
+          </p>
         </div>
         <div className="mt-10 max-w-[35rem] w-full">
           <label className="block">სრული აღწერა</label>
@@ -217,7 +221,7 @@ const AddNews = (props) => {
                 : "dark:border-white border-primary"
             }`}
           ></textarea>
-          <p className="text-red-500 mt-1 h-2">
+          <p className="text-red-500 mt-1 h-2 text-sm">
             {errors.body ? errors?.body.message : ""}
             {backendErrors?.body ? backendErrors.body : ""}
           </p>
@@ -274,7 +278,7 @@ const AddNews = (props) => {
                   props.action === "create" ? "ეს ველი აუცილებელია" : false,
               })}
             />
-            <p className="text-red-500 mt-1 h-2">
+            <p className="text-red-500 mt-1 h-2 text-sm">
               {errors.thumbnail ? errors?.thumbnail.message : ""}
               {backendErrors?.thumbnail ? backendErrors.thumbnail : ""}
             </p>

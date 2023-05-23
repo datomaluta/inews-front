@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const SearchInput = (props) => {
   const [search, setSearch] = useState();
   const navigate = useNavigate();
-  // const history = useHistory();
 
   const searchChangeHandler = (e) => {
     setSearch(e.target.value);
@@ -13,12 +12,8 @@ const SearchInput = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // history.push(`/search?query=${search}`);
     navigate(`/search?query=${search}`);
-    console.log("submited");
   };
-
-  console.log(search);
 
   return (
     <form

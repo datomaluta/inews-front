@@ -12,7 +12,6 @@ export default {
       },
       colors: {
         primary: "#1C5EC3",
-        // secondary: "#009AE7",
         secondary: "#3b82f6",
         darkbg: "#121212",
       },
@@ -23,7 +22,7 @@ export default {
           "linear-gradient(89deg, rgb(32, 74, 189) 0.1%, rgb(26, 138, 211) 51.5%, rgb(21, 74, 189) 100.2%);",
       },
       animation: {
-        smoothLoad: "smooth 0.8s ease forwards",
+        smoothLoad: "smooth 0.5s ease forwards",
         smoothLengthGrow: "lengthGrower 0.2s ease forwards",
         smoothFallFromTop: "fallFromTop 0.2s ease forwards",
         smoothFallFromBottom: "fallFromBottom 0.2s ease forwards",

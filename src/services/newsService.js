@@ -28,10 +28,6 @@ export const getAllCategories = async () => {
   return await instance.get("/api/categories");
 };
 
-// export const searchNews = async (query) => {
-//   return await instance.get(`/api/search?query=${query}`);
-// };
 export const searchNews = async (url) => {
-  console.log(url);
   return await instance.get(url);
 };

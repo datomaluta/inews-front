@@ -57,7 +57,7 @@ const Home = () => {
         {politicNewsIsLoading && societyNewsIsLoading && sportNewsIsLoading && (
           <LoadingSpinner />
         )}
-        <div className="mt-20">
+        <div className="mt-20 pb-10">
           {/* one main and two semi-main*/}
           <OneMainNews>
             {threeNewsForHome &&

@@ -38,8 +38,6 @@ const ForSearchResult = () => {
     setPageNumber((currentNumber) => currentNumber + 1);
   };
 
-  console.log(searchedNews);
-
   return (
     <div className="mt-20 px-4 py-10">
       <Header />
@@ -47,7 +45,7 @@ const ForSearchResult = () => {
       {isLoading && !error && <LoadingSpinner />}
 
       <div className="grid grid-cols-4 gap-4 sm:gap-4 mt-4 lg:grid-cols-2 md:grid-cols-1">
-        {error && (
+        {searchedNews?.length === 0 && (
           <p className="absolute top-1/4 left-1/2 -translate-x-1/2 text-xl">
             შესაბამისი სიახლე ვერ მოიძებნა
           </p>

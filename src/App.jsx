@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import Auth from "./components/sharedComponents/Auth";
 import CategoryAllNews from "./pages/CategoryAllNews";
 import ForSearchResult from "./pages/ForSearchResult";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
             element={<CategoryAllNews category="sport" />}
           />
           <Route path="/search" element={<ForSearchResult />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>
