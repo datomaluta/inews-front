@@ -5,6 +5,8 @@ import { dateFormatter } from "../helpers/dateFormatter";
 import { deleteNews, getAllNews } from "../services/newsService";
 import { fetchCSRFToken, logout, sanctumUser } from "../services/UserService";
 import LogoutIcon from "../components/icons/LogoutIcon";
+import useColorMode from "../hooks/theme/useColorMode";
+import Theme from "../components/headerComponents/Theme";
 
 const AdminNews = () => {
   const navigate = useNavigate();
@@ -52,16 +54,18 @@ const AdminNews = () => {
   return (
     <div className="bg-blue-60 pb-10 px-8 sm:px-3">
       {error && <p>დაფიქსირდა შეცდომა</p>}
-      <div className="text-xl sm:text-base flex items-center justify-between mb-8">
+      <div className=" sm:text-base flex items-center justify-between mb-8 text-white">
         <Link
           to="/"
-          className="bg-blue-600 px-2 py-2 rounded-lg  sm:py-[0.1rem]"
+          className="bg-blue-600 px-2 py-2 rounded-lg  sm:py-[0.3rem]"
         >
-          საიტზე გადასვლა
+          საიტი
         </Link>
-        <div className="flex items-center gap-2 text-xl sm:text-base ">
+
+        <div className="flex items-center gap-2  sm:text-base ">
+          <Theme />
           <Link
-            className="bg-white text-blue-600 px-2 py-1 rounded-lg  sm:py-[0.1rem]"
+            className="bg-white text-blue-600 px-2 py-1 rounded-lg  sm:py-[0.3rem]"
             to="/admin/add"
           >
             დამატება
@@ -69,7 +73,7 @@ const AdminNews = () => {
 
           <form onSubmit={submitHandler}>
             <button
-              className="flex items-center bg-blue-600 px-2 py-1 rounded-lg sm:py-[0.1rem]"
+              className="flex items-center bg-blue-600 px-2 py-1 rounded-lg sm:py-[0.3rem]"
               type="submit"
             >
               <span>გასვლა</span>
@@ -81,30 +85,32 @@ const AdminNews = () => {
         </div>
       </div>
 
-      <div className="bg-neutral-800 rounded-lg px-3 py-1 min-h-[46rem] sm:px-2">
+      <div className="dark:bg-neutral-800 bg-white rounded-lg px-3 py-1 min-h-[46rem] sm:px-2">
         {allNews &&
           allNews.map((news) => (
             <div
               key={news.id}
-              className="h-14 flex sm:gap-2 items-center justify-between border-b border-neutral-200 pb-2 mb-4"
+              className="h-14 sm:h-20 flex sm:gap-2 items-center justify-between border-b border-neutral-200 pb-2 mb-4"
             >
               <div className="flex gap-4 sm:gap-2 items-center">
-                <p className="sm:text-sm sm:hidden">
-                  {dateFormatter(news.created_at)}
-                </p>
-
                 <Link
                   to={`/admin/news/${news.id}`}
-                  className="text-lg md:text-sm hover:text-blue-600"
+                  className="font-arial md:text-sm hover:text-blue-600"
                 >
-                  {news.title}
+                  {/* {news.title} */}
+                  {news.title.length > 80
+                    ? news.title.substring(0, 80) + "..."
+                    : news.title}
                 </Link>
               </div>
 
-              <form onSubmit={(event) => deleteHandler(event, news.id)}>
+              <form
+                onSubmit={(event) => deleteHandler(event, news.id)}
+                className="ml-2"
+              >
                 <button
                   type="submit"
-                  className="bg-red-500 text-lg px-2 py-1 rounded-lg sm:text-sm "
+                  className="bg-red-500 text-sm px-2 py-1 rounded-lg  text-white"
                 >
                   წაშლა
                 </button>
@@ -112,11 +118,11 @@ const AdminNews = () => {
             </div>
           ))}
       </div>
-      <div className="flex items-center gap-4 justify-center mt-4">
+      <div className="flex items-center gap-4 justify-center mt-4 ">
         {pageNumber !== 1 ? (
           <button
             onClick={prevPageHandler}
-            className="bg-blue-600 w-12 px-2 py-2 rounded-lg"
+            className="bg-blue-600 w-12 px-2 py-2 rounded-lgtext-white"
           >
             უკან
           </button>
@@ -127,7 +133,7 @@ const AdminNews = () => {
         {!isLastPage ? (
           <button
             onClick={nextPageHandler}
-            className="bg-blue-600 w-12 px-2 py-2 rounded-lg"
+            className="bg-blue-600 w-12 px-2 py-2 rounded-lg text-white"
           >
             წინ
           </button>

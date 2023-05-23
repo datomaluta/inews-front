@@ -6,14 +6,11 @@ const usePaginateData = (url, isNumeric = false, func) => {
   const [data, setData] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
   const [error, setError] = useState();
-  console.log(url);
 
   const fetchData = async () => {
-    console.log(url);
     const response = await func(url).catch((error) =>
       setError("Something went wrong!")
     );
-    console.log(response?.data?.data);
 
     if (response?.statusText === "OK") {
       setError(null);
@@ -37,8 +34,6 @@ const usePaginateData = (url, isNumeric = false, func) => {
     } else {
       setIsLastPage(false);
     }
-
-    console.log(data);
   };
 
   return { data, fetchData, error, isLastPage, setData };

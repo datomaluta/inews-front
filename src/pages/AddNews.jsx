@@ -11,6 +11,7 @@ import {
 import useGetData from "../hooks/useGetData";
 import { fetchCSRFToken } from "../services/UserService";
 import Select from "react-select";
+import Theme from "../components/headerComponents/Theme";
 // import "react-select/dist/react-select.css";
 
 const AddNews = (props) => {
@@ -48,7 +49,7 @@ const AddNews = (props) => {
     data: news,
     fetchData: fetchCertainNews,
     error: newsError,
-  } = useGetData(`/api/news/${id}`);
+  } = useGetData(`/api/news/${id}`, true);
 
   useEffect(() => {
     if (props.action === "update") {
@@ -65,8 +66,6 @@ const AddNews = (props) => {
     reset,
   } = useForm();
   const image = useWatch({ control, name: "thumbnail" });
-
-  // console.log(news);
 
   useEffect(() => {
     if (news && defaultOptions) {
@@ -89,7 +88,6 @@ const AddNews = (props) => {
   }, [image]);
 
   const submitHandler = async (data) => {
-    // console.log(data);
     formData.append("title", data.title);
     formData.append("body", data.body);
     formData.append("category", JSON.stringify(data.category));
@@ -107,7 +105,6 @@ const AddNews = (props) => {
       response = await createNews(formData).catch((error) =>
         setBackendErrors(error.response.data.errors)
       );
-      // console.log(response);
     } else {
       response = await updateNews(id, formData).catch((error) => {
         setBackendErrors(error.response.data.errors);
@@ -133,7 +130,7 @@ const AddNews = (props) => {
       ...provided,
       color: "red",
       width: "full",
-      border: "1px solid gray",
+      border: "1px solid #1C5EC3",
       borderRadius: "4px",
       boxShadow: state.isFocused ? "0 0 0 2px blue" : "none",
     }),
@@ -143,18 +140,22 @@ const AddNews = (props) => {
     }),
     option: (provided, state) => ({
       ...provided,
-      color: state.isSelected ? "white" : "black", // Change the option text color
-      backgroundColor: state.isSelected ? "blue" : "white", // Change the option background color
-      // Add more custom styles as needed
+      color: state.isSelected ? "white" : "black",
+      backgroundColor: state.isSelected ? "blue" : "white",
     }),
   };
-  console.log(news?.categories);
 
   return (
     <div className="pb-20 px-8 sm:px-3">
-      <div className="flex justify-between items-center text-2xl md:text-xl">
-        <h1>სიახლის დამატება</h1>
-        <Link to="/admin/news" className="bg-blue-500 px-2 py-1 rounded-lg">
+      <div className="flex justify-between items-center sm:text-sm">
+        <div className="flex items-center gap-2">
+          <h1>სიახლის დამატება</h1>
+          <Theme />
+        </div>
+        <Link
+          to="/admin/news"
+          className="bg-blue-500 px-2 py-1 rounded-lg text-white"
+        >
           ყველა სიახლე
         </Link>
       </div>
@@ -164,7 +165,7 @@ const AddNews = (props) => {
         className="flex flex-col items-center"
       >
         <div className="mt-10 max-w-[35rem] w-full ">
-          <label className="block text-lg">სათაური</label>
+          <label className="block">სათაური</label>
           <input
             // defaultValue={props.action === "create" ? "" : news?.title}
             {...register("title", {
@@ -172,7 +173,9 @@ const AddNews = (props) => {
               maxLength: { value: 250, message: "მაქსიმუმ 250 სიმბოლო" },
             })}
             className={`w-full bg-transparent border font-sans text-base ${
-              errors.title ? "border-red-500" : "border-white"
+              errors.title
+                ? "border-red-500"
+                : "dark:border-white border-primary"
             } rounded-lg px-2 py-2 focus:outline-none focus:border-blue-500 transition-all`}
             type="text"
           />
@@ -187,7 +190,6 @@ const AddNews = (props) => {
           </label>
           {options.length > 0 && (
             <Controller
-              // defaultValue={defaultOptions}
               name="category"
               control={control}
               render={({ field }) => (
@@ -202,16 +204,17 @@ const AddNews = (props) => {
           )}
         </div>
         <div className="mt-10 max-w-[35rem] w-full">
-          <label className="block text-lg">სრული აღწერა</label>
+          <label className="block">სრული აღწერა</label>
           <textarea
-            // defaultValue={props.action === "create" ? "" : news?.body}
             {...register("body", {
               required: "ეს ველი აუცილებელია",
             })}
             cols="30"
             rows="10"
             className={`bg-transparent border rounded-lg w-full  font-sans px-2 py-2 ${
-              errors.body ? "border-red-500" : "border-white"
+              errors.body
+                ? "border-red-500"
+                : "dark:border-white border-primary"
             }`}
           ></textarea>
           <p className="text-red-500 mt-1 h-2">
@@ -220,18 +223,20 @@ const AddNews = (props) => {
           </p>
         </div>
         <div className="mt-10 max-w-[35rem] w-full">
-          <label className="block text-lg ">ფოტო</label>
+          <label className="block">ფოტო</label>
           <label
             htmlFor="imgupload"
             className={`border-dashed border-2 ${
-              errors.thumbnail ? "border-red-500" : "border-white"
-            } w-full rounded-lg px-4 py-4 h-80 flex flex-col items-center cursor-pointer`}
+              errors.thumbnail
+                ? "border-red-500"
+                : "dark:border-white border-primary"
+            } w-full rounded-lg px-4 py-4 h-80 md:h-52 flex flex-col items-center cursor-pointer`}
           >
             {!baseImage && (
               <>
                 <label
                   htmlFor="imgupload"
-                  className="bg-blue-500 px-2 py-2 text-lg mt-4 rounded-lg cursor-pointer"
+                  className="bg-blue-500 px-2 py-2  mt-4 rounded-lg cursor-pointer text-white"
                 >
                   აირჩიე ფოტო
                 </label>
@@ -248,7 +253,7 @@ const AddNews = (props) => {
                       news?.thumbnail
                     }`}
                     alt="img from db"
-                    className="w-32 rounded-lg h-auto mt-4"
+                    className="w-32 rounded-lg h-20 object-cover mt-4"
                   />
                 )}
               </>
@@ -278,7 +283,7 @@ const AddNews = (props) => {
 
         <button
           type="submit"
-          className="bg-blue-500 px-2 py-2 text-xl rounded-lg mt-10 max-w-[35rem] w-full"
+          className="bg-blue-500 px-2 py-2 rounded-lg mt-10 max-w-[35rem] w-full text-white"
         >
           დამატება
         </button>

@@ -31,16 +31,18 @@ const Login = () => {
       <div className="flex justify-center pt-48 h-full px-4">
         <Header />
         <div className="w-[25rem]">
-          <h1 className="text-4xl text-blue-600 rounded-lg px-2 py-1 text-center  mb-4">
+          <h1 className="text-2xl text-blue-600 rounded-lg px-2 py-1 text-center  mb-4">
             შესვლა
           </h1>
           <form onSubmit={handleSubmit(submitHandler)}>
             <div className="mb-6">
-              <label className="text-lg">სახელი</label>
+              <label>სახელი</label>
               <input
                 {...register("name", { required: "ეს ველი აუცილებელია" })}
                 className={`w-full placeholder:text-neutral-500 bg-transparent border font-sans text-base  rounded-lg px-2 py-2 focus:outline-none focus:border-blue-500 transition-all ${
-                  errors.name ? "border-red-500" : "border-white"
+                  errors.name
+                    ? "border-red-500"
+                    : "dark:border-white border-primary"
                 }`}
                 placeholder="შეიყვანეთ სახელი"
               />
@@ -50,11 +52,13 @@ const Login = () => {
               </p>
             </div>
             <div className="mb-6">
-              <label className="text-lg">პაროლი</label>
+              <label>პაროლი</label>
               <input
                 {...register("password", { required: "ეს ველი აუცილებელია" })}
                 className={`w-full placeholder:text-neutral-500 bg-transparent border font-sans text-base  rounded-lg px-2 py-2 focus:outline-none focus:border-blue-500 transition-all ${
-                  errors.password ? "border-red-500" : "border-white"
+                  errors.password
+                    ? "border-red-500"
+                    : "dark:border-white border-primary"
                 }`}
                 type="password"
                 placeholder="შეიყვანეთ პაროლი"
@@ -63,13 +67,13 @@ const Login = () => {
                 {errors.password ? errors?.password.message : ""}
               </p>
             </div>
-            <div className="flex gap-2 mb-6 text-lg">
+            <div className="flex gap-2 mb-6">
               <span>არ გაქვთ ანგარიში?</span>{" "}
               <Link to="/register" className="text-blue-600">
                 დარეგისტრირდი
               </Link>
             </div>
-            <button className="bg-blue-600 text-2xl px-4 py-2 rounded-lg block mx-auto w-full">
+            <button className="bg-blue-600  px-4 py-2 rounded-lg block mx-auto w-full text-white">
               შესვლა
             </button>
           </form>
