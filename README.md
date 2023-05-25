@@ -36,7 +36,7 @@ A news site is a platform where you can read news about politics, society, and s
 
 ### Getting Started
 
-1\. First of all you need to clone Covid Questionare repository from github:
+1\. First of all you need to clone repository from github:
 
 ```sh
 git clone https://github.com/datomaluta/inews-front.git
