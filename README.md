@@ -4,6 +4,10 @@
 
 ---
 
+### Screenshot
+
+![](readme/assets/screenshot.jpg)
+
 A news site is a platform where you can read news about politics, society, and sports. The app language is Georgian. It features a search functionality, dark/light theme mode, and also an admin functionality. If you register and authenticated with laravel sanctum, you will have permission to access the admin panel and create, edit, or delete news.
 
 #
